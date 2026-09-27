@@ -2,6 +2,8 @@ class AudioController {
     constructor() {
         this.audio = new Audio();
         this.audio.loop = true;
+        this.audio.preload = 'auto';
+        this.audio.setAttribute('playsinline', '');
         this.volume = 0.3;
         this.audio.volume = this.volume;
         this.currentTrack = '';
@@ -62,7 +64,7 @@ class AudioController {
         this.audio.pause();
         this.audio.currentTime = 0;
         this.currentTrack = source;
-        this.audio.src = source;
+        this.audio.src = new URL(source, document.baseURI).href;
         this.audio.load();
         this.audio.volume = this.volume;
         if (shouldPlay && this.userInteracted) this.playAudio();
