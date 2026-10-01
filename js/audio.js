@@ -44,6 +44,10 @@ class AudioController {
         }
     }
     
+    clampVolume(value) {
+        return Math.min(1, Math.max(0, value));
+    }
+
     playTrack(trackName, shouldPlay = this.isPlaying) {
         const tracks = window.birthdayData?.musicTracks || {};
         const source = tracks[trackName] || '';
@@ -66,7 +70,7 @@ class AudioController {
         this.currentTrack = source;
         this.audio.src = new URL(source, document.baseURI).href;
         this.audio.load();
-        this.audio.volume = this.volume;
+        this.audio.volume = this.clampVolume(this.volume);
         if (shouldPlay && this.userInteracted) this.playAudio();
     }
 
@@ -85,12 +89,22 @@ class AudioController {
         if (!this.userInteracted) return;
         const tracks = window.birthdayData?.musicTracks || {};
         const source = tracks[trackName] || '';
+        if (!source) {
+            this.audio.pause();
+            this.setButtonState(false);
+            return;
+        }
+
         if (source === this.currentTrack) {
             if (this.audio.paused) this.playAudio();
             return;
         }
 
-        if (this.fadeTimer) cancelAnimationFrame(this.fadeTimer);
+        if (this.fadeTimer) {
+            cancelAnimationFrame(this.fadeTimer);
+            this.fadeTimer = null;
+        }
+
         const wasPlaying = this.isPlaying && !this.audio.paused;
         if (!wasPlaying) {
             this.playTrack(trackName, true);
@@ -100,7 +114,7 @@ class AudioController {
         const fadeStart = performance.now();
         const fadeOut = (timestamp) => {
             const progress = Math.min((timestamp - fadeStart) / this.fadeDuration, 1);
-            this.audio.volume = this.volume * (1 - progress);
+            this.audio.volume = this.clampVolume(this.volume * (1 - progress));
             if (progress < 1) {
                 this.fadeTimer = requestAnimationFrame(fadeOut);
                 return;
@@ -114,17 +128,19 @@ class AudioController {
                 const rampStart = performance.now();
                 const fadeIn = (fadeTimestamp) => {
                     const rampProgress = Math.min((fadeTimestamp - rampStart) / this.fadeDuration, 1);
-                    this.audio.volume = this.volume * rampProgress;
+                    this.audio.volume = this.clampVolume(this.volume * rampProgress);
                     if (rampProgress < 1) {
                         this.fadeTimer = requestAnimationFrame(fadeIn);
                     } else {
-                        this.audio.volume = this.volume;
+                        this.audio.volume = this.clampVolume(this.volume);
+                        this.fadeTimer = null;
                     }
                 };
                 this.fadeTimer = requestAnimationFrame(fadeIn);
             }).catch(() => {
-                this.audio.volume = this.volume;
+                this.audio.volume = this.clampVolume(this.volume);
                 this.setButtonState(false);
+                this.fadeTimer = null;
             });
         };
         this.fadeTimer = requestAnimationFrame(fadeOut);

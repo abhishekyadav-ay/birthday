@@ -214,11 +214,11 @@ class BirthdayApp {
             cakeSection.style.transition = 'opacity 0.6s ease';
             setTimeout(() => {
                 cakeSection.classList.remove('active');
+                cakeSection.style.display = 'none';
                 cakeSection.style.opacity = '';
                 
-                // Show scrollable sections and land on the memories story
                 sections.forEach(sec => {
-                    sec.style.display = 'block';
+                    sec.style.display = sec.id === 'surprise-section' ? 'flex' : 'block';
                 });
                 if (surpriseSection) {
                     surpriseSection.style.display = 'flex';
@@ -229,9 +229,11 @@ class BirthdayApp {
                 this.updateJourney('memories-section');
                 this.audio.switchTo('memories');
                 if (memoriesSection) {
-                    memoriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    requestAnimationFrame(() => {
+                        memoriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
                 }
-            }, 600);
+            }, 400);
         }
     }
 
