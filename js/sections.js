@@ -223,6 +223,8 @@ class SectionController {
         const partySound = window.birthdayData?.partySound;
         if (partySound) {
             const audio = new Audio(partySound);
+            audio.preload = 'auto';
+            audio.currentTime = 0;
             audio.volume = 0.55;
             audio.play().catch(() => {});
         }
@@ -239,7 +241,7 @@ class SectionController {
 
         setTimeout(() => {
             this.app.switchToScrollMode();
-        }, 5000);
+        }, 1800);
     }
 
     // --- SECTION 4: Memories ---

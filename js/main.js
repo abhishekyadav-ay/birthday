@@ -208,32 +208,33 @@ class BirthdayApp {
         const sections = document.querySelectorAll('.section');
         const surpriseSection = document.getElementById('surprise-section');
         const memoriesSection = document.getElementById('memories-section');
-        
+
         if (cakeSection) {
-            cakeSection.style.opacity = '0';
-            cakeSection.style.transition = 'opacity 0.6s ease';
-            setTimeout(() => {
-                cakeSection.classList.remove('active');
-                cakeSection.style.display = 'none';
-                cakeSection.style.opacity = '';
-                
-                sections.forEach(sec => {
-                    sec.style.display = sec.id === 'surprise-section' ? 'flex' : 'block';
-                });
-                if (surpriseSection) {
-                    surpriseSection.style.display = 'flex';
-                }
-                
-                document.body.style.overflow = 'auto';
-                this.currentScreen = 'memories-section';
-                this.updateJourney('memories-section');
-                this.audio.switchTo('memories');
-                if (memoriesSection) {
-                    requestAnimationFrame(() => {
-                        memoriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    });
-                }
-            }, 400);
+            cakeSection.classList.remove('active');
+            cakeSection.style.display = 'none';
+            cakeSection.style.opacity = '1';
+            cakeSection.style.transform = 'none';
+        }
+
+        sections.forEach(sec => {
+            const visibleStorySections = ['memories-section', 'gallery-section', 'reasons-section'];
+            sec.style.display = visibleStorySections.includes(sec.id) ? 'block' : 'none';
+        });
+
+        if (surpriseSection) {
+            surpriseSection.style.display = 'none';
+        }
+
+        document.body.style.overflow = 'auto';
+        document.body.style.overflowX = 'hidden';
+        this.currentScreen = 'memories-section';
+        this.updateJourney('memories-section');
+        this.audio.switchTo('memories');
+
+        if (memoriesSection) {
+            requestAnimationFrame(() => {
+                memoriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
         }
     }
 
