@@ -115,14 +115,14 @@ hehe`,
   // ── MUSIC ──────────────────────────────────────────────────
   // Add your own local music files here when they are ready.
   musicTracks: {
-    opening: "assets/audio/opening-quiet-morning-promise.mp3",
-    reveal: "assets/audio/opening-quiet-morning-promise.mp3",
+    opening: "assets/audio/opening-light-between-palms.mp3",
+    reveal: "assets/audio/birthday-reveal-softly-shared-secret.mp3",
     cake: "assets/audio/wish-afternoon-of-wishes.mp3",
     memories: "assets/audio/memories-year-well-kept.mp3",
-    gallery: "",
+    gallery: "assets/audio/memories-year-well-kept.mp3",
     surprise: "assets/audio/open-envelope-note-left-behind.mp3",
-    letter: "",
-    final: "",
+    letter: "assets/audio/opening-light-between-palms.mp3",
+    final: "assets/audio/birthday-reveal-softly-shared-secret.mp3",
   },
   partySound: "assets/audio/gift-confetti-party.mp3",
 

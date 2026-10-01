@@ -85,12 +85,15 @@ class AudioController {
         if (!this.userInteracted) return;
         const tracks = window.birthdayData?.musicTracks || {};
         const source = tracks[trackName] || '';
-        if (source === this.currentTrack) return;
+        if (source === this.currentTrack) {
+            if (this.audio.paused) this.playAudio();
+            return;
+        }
 
         if (this.fadeTimer) cancelAnimationFrame(this.fadeTimer);
         const wasPlaying = this.isPlaying && !this.audio.paused;
         if (!wasPlaying) {
-            this.playTrack(trackName, false);
+            this.playTrack(trackName, true);
             return;
         }
 
@@ -104,7 +107,7 @@ class AudioController {
             }
 
             this.audio.pause();
-            this.playTrack(trackName, false);
+            this.playTrack(trackName, true);
             this.audio.volume = 0;
             this.audio.play().then(() => {
                 this.setButtonState(true);
