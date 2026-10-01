@@ -207,6 +207,7 @@ class BirthdayApp {
         const cakeSection = document.getElementById('cake-section');
         const sections = document.querySelectorAll('.section');
         const surpriseSection = document.getElementById('surprise-section');
+        const memoriesSection = document.getElementById('memories-section');
         
         if (cakeSection) {
             cakeSection.style.opacity = '0';
@@ -215,7 +216,7 @@ class BirthdayApp {
                 cakeSection.classList.remove('active');
                 cakeSection.style.opacity = '';
                 
-                // Show scrollable sections
+                // Show scrollable sections and land on the memories story
                 sections.forEach(sec => {
                     sec.style.display = 'block';
                 });
@@ -224,8 +225,12 @@ class BirthdayApp {
                 }
                 
                 document.body.style.overflow = 'auto';
+                this.currentScreen = 'memories-section';
                 this.updateJourney('memories-section');
-                
+                this.audio.switchTo('memories');
+                if (memoriesSection) {
+                    memoriesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             }, 600);
         }
     }

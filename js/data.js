@@ -14,8 +14,8 @@
 const birthdayData = {
 
   // ── NAMES ──────────────────────────────────────────────────
-  herName: "Her Name",          // ← Replace with her name
-  yourName: "Your Name",        // ← Replace with your name
+  herName: "Jikudi Baby",          // ← Replace with her name
+  yourName: "Me",        // ← Replace with your name
 
   // ── SECTION 1 : OPENING SCREEN ─────────────────────────────
   openingText: "A little universe made for the girl who makes my world feel brighter.",
@@ -96,7 +96,7 @@ const birthdayData = {
   // ── SECTION 8 : FINAL LETTER ───────────────────────────────
   letterTitle: "For you, always.",
   finalLetter:
-    `Dear [Her Name],
+    `Dear Baby,
 
 On your birthday, I just want you to know how much you mean to me.
 
@@ -107,7 +107,7 @@ I hope you know how deeply I cherish you, how grateful I am for the love we shar
 Happy Birthday, my love. May this year be full of joy, softness, and unforgettable memories made together.
 
 Yours always,
-[Your Name]`,
+hehe`,
 
   // ── SECTION 9 : FINAL SCREEN ──────────────────────────────
   closingLine: "May this year bring you endless happiness, deep peace, and all the love you deserve.",
